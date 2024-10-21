@@ -37,8 +37,11 @@ export function ProVersion() {
   };
 
   return (
-    <div className="">
-      <h2 className="text-center text-4xl font-bold text-gray-900 mb-8">
+    <div className="p-4">
+      <h2
+        id="pro-version"
+        className="text-center text-4xl font-bold text-gray-900 mb-8"
+      >
         Pro Version is Coming Soon!
       </h2>
 

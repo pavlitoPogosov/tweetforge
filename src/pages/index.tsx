@@ -4,6 +4,7 @@ import { TweetGenerator } from "@/widgets/TweetGenerator";
 import { ProVersion } from "@/widgets/ProVersion";
 import { FeedbackForm } from "@/widgets/Feedback";
 import Head from "next/head";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -19,20 +20,20 @@ export default function Home() {
         />
       </Head>
 
-      <div>
-        <Header />
-        <main className="mt-8 md:mt-14">
-          <TweetGenerator />
-        </main>
+      <Header />
+      <main className="mt-8 md:mt-14">
+        <TweetGenerator />
+      </main>
 
-        <section className="mt-12 md:mt-24 max-w-xl mx-auto">
-          <ProVersion />
-        </section>
+      <section className="mt-12 md:mt-24 max-w-xl mx-auto">
+        <ProVersion />
+      </section>
 
-        <section className="mt-12 md:mt-24 max-w-xl mx-auto">
-          <FeedbackForm />
-        </section>
-      </div>
+      <section className="mt-12 md:mt-24 max-w-xl mx-auto">
+        <FeedbackForm />
+      </section>
+
+      <Footer />
     </>
   );
 }

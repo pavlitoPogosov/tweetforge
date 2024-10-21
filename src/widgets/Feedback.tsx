@@ -30,11 +30,14 @@ export function FeedbackForm() {
   };
 
   return (
-    <div>
-      <h2 className="text-center text-4xl font-bold text-gray-900 mb-8">
+    <div className="p-4">
+      <h2
+        id="leave-opinion"
+        className="text-center text-4xl font-bold text-gray-900 mb-8"
+      >
         Leave Your Opinion!
       </h2>
-      <div className="rounded-lg max-w-lg mx-auto p-4">
+      <div className="rounded-lg max-w-lg mx-auto ">
         <form
           onSubmit={handleFeedbackSubmit}
           className="flex flex-col items-center"
