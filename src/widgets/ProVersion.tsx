@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 
 export function ProVersion() {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValidEmail(email)) {
-      setMessage("Please enter a valid email address.");
+      setError("Please enter a valid email address.");
       return;
     }
     try {
@@ -19,11 +22,12 @@ export function ProVersion() {
         "https://webhook.latenode.com/1194/prod/90c88543-8f80-4b56-9c45-b3bfaa995e79",
         { email }
       );
-      setMessage("Thank you! We will notify you about early access.");
-      setEmail("");
+      toast.success("Thank you! We will notify you about early access.");
+      setIsSubmitted(true);
+      setError("");
     } catch (error) {
       console.error("Error submitting email:", error);
-      setMessage("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     }
   };
 
@@ -33,54 +37,67 @@ export function ProVersion() {
   };
 
   return (
-    <div className="mt-16 px-4">
-      <h2 className="text-center text-4xl font-bold text-gray-900 mb-12">
+    <div className="">
+      <h2 className="text-center text-4xl font-bold text-gray-900 mb-8">
         Pro Version is Coming Soon!
       </h2>
 
-      <Card className="shadow-2xl border-2 border-gray-300">
-        <CardContent className="p-12">
-          <div className="text-center mb-8">
-            <p className="text-6xl font-black text-purple-700 mb-6">
-              $19/month
-            </p>
-            <p className="text-xl text-gray-700 mb-8">
-              Unlock powerful features to take your content generation to the
-              next level!
+      <Card className="max-w-sm mx-auto shadow-lg border border-gray-300">
+        <CardContent className="p-6">
+          <div className="text-center mb-6">
+            <p className="text-4xl font-bold text-gray-900 mb-6">$19/month</p>
+            <p className="text-lg text-gray-900 font-bold mb-3">
+              Unlock more powerful features! Leave your email for early access.
             </p>
           </div>
-          <ul className="text-left list-disc list-inside text-gray-800 mb-10">
-            <li className="mb-4">Parse entire domains</li>
-            <li className="mb-4">Advanced text generating</li>
-            <li className="mb-4">Auto-poste</li>
-            <li className="mb-4">Customize and Teach AI to match your brand</li>
+          <ul className="text-left list-disc list-inside text-gray-800 mb-8">
+            <li>Generate tweets from entire websites by domain</li>
+            <Separator orientation="horizontal" />
+            <li className="mt-2">
+              Advanced tweet generation with customizable options
+            </li>
+            <Separator orientation="horizontal" />
+            <li className="mt-2">
+              Schedule and auto-post tweets with one click
+            </li>
+            <Separator orientation="horizontal" />
+            <li className="mt-2">
+              Teach the tool to match your brand’s style using your account,
+              field, and previous tweets
+            </li>
           </ul>
-          <p className="text-center text-gray-800 mb-10 text-lg">
-            Sign up now to get early access to the Pro Version!
+          <p className="text-center text-gray-800 mb-6">
+            Leave your email for early free access. We&apos;ll only send you
+            <span className="font-bold">{` one email`}</span> with the link when
+            it&apos;s ready.
           </p>
           <form
             onSubmit={handleSubscribe}
             className="flex flex-col items-center"
           >
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full mb-6 max-w-lg border border-gray-400 p-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-            <Button
-              type="submit"
-              className="bg-black text-white py-4 px-10 rounded-lg hover:bg-gray-800 transition-all duration-300 shadow-xl"
-            >
-              Get Early Access
-            </Button>
+            <div className="w-full max-w-lg">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmitted}
+                className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+              />
+              {error && (
+                <p className="text-red-600 mt-1 text-sm text-center">{error}</p>
+              )}
+            </div>
+
+            {!isSubmitted && (
+              <Button
+                type="submit"
+                className="mx-auto mt-2 w-full bg-black text-white text-xl py-6 px-6 rounded-md hover:bg-gray-900"
+              >
+                Notify Me
+              </Button>
+            )}
           </form>
-          {message && (
-            <p className="text-green-700 mt-8 text-center font-semibold text-lg">
-              {message}
-            </p>
-          )}
         </CardContent>
       </Card>
     </div>

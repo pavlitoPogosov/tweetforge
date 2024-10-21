@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect, useState } from "react";
+import { CopyIcon } from "@/components/icons/CopyIcon";
 
 const DEFAULT_INSTRUCTION = `Don't use emojis \nDon't use hashtags`;
 
@@ -16,6 +17,7 @@ export function TweetGenerator() {
   const [loading, setLoading] = useState(false);
   const [tweets, setTweets] = useState([] as { text: string }[]);
   const [progress, setProgress] = useState(0);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined = undefined;
@@ -72,17 +74,22 @@ export function TweetGenerator() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="p-4 bg-white rounded mt-8">
-        <h1 className="text-2xl font-bold mb-3 text-gray-800">
-          Generate Tweets from URL with TweetForge
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-2xl mx-auto p-4 bg-white rounded"
+      >
+        <h1 className="text-4xl text-center font-bold mb-3 text-gray-900">
+          Instantly Generate High-Quality Tweets From Any URL
         </h1>
-        <p className="text-gray-600 mb-5">
-          Enter a URL and provide additional instructions to generate tweets and
-          content.
+
+        <p className="text-lg text-center text-gray-600 mb-8">
+          Give a URL to the content you like, add your suggestions, and get
+          free, ready-to-post tweets.
         </p>
+
         <div className="mb-6">
           <label htmlFor="url" className="block text-gray-700 font-medium mb-1">
-            Page URL
+            URL
           </label>
           <Input
             id="url"
@@ -90,11 +97,8 @@ export function TweetGenerator() {
             placeholder="Enter the URL (e.g., https://example.com)"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="w-full"
+            className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
           />
-          <p className="text-sm text-gray-500 mt-1">
-            Enter the URL of the web page you want to generate tweets from.
-          </p>
           {error && <p className="text-red-600 mt-1 text-sm">{error}</p>}
         </div>
         <div className="mb-6">
@@ -106,24 +110,24 @@ export function TweetGenerator() {
           </label>
           <Textarea
             id="instructions"
-            placeholder="Enter additional instructions for content generation (e.g., focus on key statistics, keep it humorous)"
+            placeholder="Enter additional instructions for tweet generation (e.g., focus on key statistics, keep it humorous)"
             value={instructions}
             onChange={(e) => setInstructions(e.target.value)}
-            className="w-full"
-            style={{ minHeight: 100 }}
+            style={{ minHeight: 100, resize: "none" }}
+            className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
           />
           <p className="text-sm text-gray-500 mt-1">
-            Add additional instructions to the AI assistant who will be
-            responsible for generating your tweets.
+            Add extra instructions to help create your tweets.
           </p>
         </div>
         <Button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900"
           disabled={loading}
+          className="mx-auto w-full bg-black text-white text-xl py-6 px-6 rounded-md hover:bg-gray-900"
         >
-          {loading ? "Generating..." : "Generate Content"}
+          {loading ? "Generating..." : "Generate Tweets"}
         </Button>
+
         {loading && (
           <div className="mt-4">
             <Progress value={progress} className="w-full" />
@@ -142,9 +146,13 @@ export function TweetGenerator() {
               className="p-4 bg-gray-100 rounded shadow-md flex flex-col justify-between"
             >
               <p className="text-gray-800 mb-4">{tweet.text}</p>
-              <CopyToClipboard text={tweet.text}>
-                <Button className="bg-black text-white py-2 rounded-md hover:bg-gray-900">
-                  Copy Text
+              <CopyToClipboard
+                text={tweet.text}
+                onCopy={() => setCopiedIndex(index)}
+              >
+                <Button className="mx-auto bg-black text-white text-md py-1 rounded-md hover:bg-gray-900 w-fit">
+                  {copiedIndex === index ? "Copied!" : "Copy Text"}
+                  <CopyIcon />
                 </Button>
               </CopyToClipboard>
             </div>
