@@ -7,12 +7,19 @@ import { toast } from "sonner";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect, useState } from "react";
 import { CopyIcon } from "@/components/icons/CopyIcon";
-
-const DEFAULT_INSTRUCTION = `Don't use emojis \nDon't use hashtags`;
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { DEFAULT_INSTRUCTION, PERSONALITIES } from "./_data";
 
 export function TweetGenerator() {
   const [url, setUrl] = useState("");
   const [instructions, setInstructions] = useState(DEFAULT_INSTRUCTION);
+  const [personality, setPersonality] = useState(PERSONALITIES[0].label);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [tweets, setTweets] = useState([] as { text: string }[]);
@@ -48,9 +55,11 @@ export function TweetGenerator() {
         {
           url,
           instructions,
+          personality:
+            PERSONALITIES.find((x) => x.label === personality)?.prompt || "",
         }
       );
-      setTweets(response.data.tweets);
+      setTweets(response.data);
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -101,6 +110,7 @@ export function TweetGenerator() {
           />
           {error && <p className="text-red-600 mt-1 text-sm">{error}</p>}
         </div>
+
         <div className="mb-6">
           <label
             htmlFor="instructions"
@@ -120,6 +130,40 @@ export function TweetGenerator() {
             Add extra instructions to help create your tweets.
           </p>
         </div>
+
+        <div className="mb-6">
+          <label
+            htmlFor="ton-of-voice"
+            className="block text-gray-700 font-medium mb-1"
+          >
+            Ton of Voice
+          </label>
+
+          <Select onValueChange={setPersonality} value={personality}>
+            <SelectTrigger
+              id="ton-of-voice"
+              className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+            >
+              <SelectValue placeholder="Select a verified email to display" />
+            </SelectTrigger>
+            <SelectContent>
+              {PERSONALITIES.map((option) => (
+                <SelectItem
+                  className="text-lg px-6 py-2"
+                  key={option.id}
+                  value={option.label}
+                >
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <p className="text-sm text-gray-500 mt-1">
+            Pick the tone for your tweets.
+          </p>
+        </div>
+
         <Button
           type="submit"
           disabled={loading}

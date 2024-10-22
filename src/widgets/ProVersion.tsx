@@ -97,7 +97,7 @@ export function ProVersion() {
                 type="submit"
                 className="mx-auto mt-2 w-full bg-black text-white text-xl py-6 px-6 rounded-md hover:bg-gray-900"
               >
-                Notify Me
+                Stay Tuned
               </Button>
             )}
           </form>
