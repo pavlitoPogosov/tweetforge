@@ -17,7 +17,7 @@ import {
 import { DEFAULT_INSTRUCTION, PERSONALITIES } from "./_data";
 
 export function TweetGenerator() {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://paulgraham.com/foundermode.html");
   const [instructions, setInstructions] = useState(DEFAULT_INSTRUCTION);
   const [personality, setPersonality] = useState(PERSONALITIES[0].label);
   const [error, setError] = useState("");
