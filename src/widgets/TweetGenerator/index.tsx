@@ -106,7 +106,7 @@ export function TweetGenerator() {
             placeholder="Enter the URL (e.g., https://example.com)"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 text-gray-900"
           />
           {error && <p className="text-red-600 mt-1 text-sm">{error}</p>}
         </div>
@@ -124,7 +124,7 @@ export function TweetGenerator() {
             value={instructions}
             onChange={(e) => setInstructions(e.target.value)}
             style={{ minHeight: 100, resize: "none" }}
-            className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 text-gray-900"
           />
           <p className="text-sm text-gray-500 mt-1">
             Add extra instructions to help create your tweets.
@@ -136,13 +136,13 @@ export function TweetGenerator() {
             htmlFor="ton-of-voice"
             className="block text-gray-700 font-medium mb-1"
           >
-            Ton of Voice
+            Tone of Voice
           </label>
 
           <Select onValueChange={setPersonality} value={personality}>
             <SelectTrigger
               id="ton-of-voice"
-              className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+              className="w-full mb-2 border border-gray-400 p-6 text-lg rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 text-gray-900"
             >
               <SelectValue placeholder="Select a verified email to display" />
             </SelectTrigger>
